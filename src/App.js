@@ -1,33 +1,30 @@
-import React from "react";
-import "./style.css";
-import {useState, useEffect} from 'react'; 
+import React from 'react';
+import './style.css';
+import { useState, useEffect } from 'react';
 
 const withMousePosition = (WrappedComponent) => {
-  return(props) => {
-
+  return (props) => {
     const [mousePosition, setMousePosition] = useState({
-      x:0,
-      y:0,
-    })
+      x: 0,
+      y: 0,
+    });
 
     useEffect(() => {
       const handleMousePositionChange = (e) => {
         setMousePosition({
           x: e.clientX,
           y: e.clientY,
-        })
-      }
+        });
+      };
 
-      window.addEventListener("mousemove", handleMousePositionChange);
+      window.addEventListener('mousemove', handleMousePositionChange);
 
-      return() => {
-        window.removeEventListener("mousemove", handleMousePositionChange);
-      }
-    }, [])
+      return () => {
+        window.removeEventListener('mousemove', handleMousePositionChange);
+      };
+    }, []);
 
-    return (
-      <WrappedComponent {...props} mousePosition={mousePosition} />
-    )
+    return <WrappedComponent {...props} mousePosition={mousePosition} />;
   };
 };
 
@@ -37,14 +34,14 @@ const PanelMouseLogger = ({ mousePosition }) => {
   }
 
   return (
-    <div  className = "BasicTracker">
+    <div className="BasicTracker">
       <p>Mouse Position</p>
-      <div style={styles}className = "Row">
-        <span > x : {mousePosition.x},</span>
+      <div style={styles} className="Row">
+        <span> x : {mousePosition.x},</span>
         <span> y : {mousePosition.y}</span>
       </div>
     </div>
-);
+  );
 };
 
 const PointMouseLogger = ({ mousePosition }) => {
@@ -57,7 +54,7 @@ const PointMouseLogger = ({ mousePosition }) => {
       ({mousePosition.x}, {mousePosition.y})
     </p>
   );
-}
+};
 
 let styles = {
   marginRight: '20px',
@@ -75,12 +72,12 @@ const NewPointMouseLogger = withMousePosition(PointMouseLogger);
 
 function App() {
   return (
-    <div className = "App">
-      <h1 className = "header"> Mouse Tracker `🖱</h1>
+    <div className="App">
+      <h1 className="header"> Mouse Tracker `🖱</h1>
       <NewPanelMouseLogger />
       <NewPointMouseLogger />
     </div>
-  )
+  );
 }
 
 export default App;
